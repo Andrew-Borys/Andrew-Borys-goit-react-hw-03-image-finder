@@ -1,4 +1,4 @@
-import { Component } from 'react/cjs/react.development';
+import { Component } from 'react';
 import { getGallary } from './services/API';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery';
