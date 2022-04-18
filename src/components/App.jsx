@@ -21,9 +21,6 @@ export class App extends Component {
   componentDidUpdate(_, prevState) {
     const { searchQuery, page } = this.state;
     if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
-      // console.log('new query');
-      // console.log('UPDATE searchQuery', searchQuery);
-      // console.log('UPDATE page', page);
       this.receiveGalary(searchQuery, page);
     }
   }
