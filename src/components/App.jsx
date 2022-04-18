@@ -55,7 +55,7 @@ export class App extends Component {
   };
 
   onCurrentImage = data => {
-    console.log(data);
+    // console.log(data);
     this.setState({
       modal: true,
       modalImage: data,
