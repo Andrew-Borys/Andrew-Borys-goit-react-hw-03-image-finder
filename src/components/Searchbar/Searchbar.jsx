@@ -1,5 +1,5 @@
 import { Component } from 'react/cjs/react.production.min';
-import { Header, Form, Button, ButtonLabel, Input } from './Searchbar.styled';
+import { Header, Form, Button, Input } from './Searchbar.styled';
 import { ImSearch } from 'react-icons/im';
 
 class Searchbar extends Component {
@@ -21,14 +21,11 @@ class Searchbar extends Component {
   };
 
   render() {
-    // console.log(<ImSearch />);
     return (
       <Header>
         <Form onSubmit={this.handleSubmitForm}>
           <Button type="submit">
-            <ButtonLabel>
-              <ImSearch />
-            </ButtonLabel>
+            <ImSearch size={24} />
           </Button>
 
           <Input
