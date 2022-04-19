@@ -4,19 +4,18 @@ import { ImSearch } from 'react-icons/im';
 
 class Searchbar extends Component {
   state = {
-    inputValue: '',
+    searchQuery: '',
   };
 
   handleSubmitForm = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state.inputValue);
+    this.props.onSubmit(this.state.searchQuery);
   };
 
   handleInputEntry = e => {
     const { name, value } = e.currentTarget;
     this.setState({
       [name]: value,
-      page: 1,
     });
   };
 
@@ -32,7 +31,7 @@ class Searchbar extends Component {
             // autofocus
             autocomplete="off"
             type="text"
-            name="inputValue"
+            name="searchQuery"
             value={this.state.inputValue}
             onChange={this.handleInputEntry}
             placeholder="Search images and photos"

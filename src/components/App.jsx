@@ -23,11 +23,15 @@ export class App extends Component {
     if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
       this.receiveGalary(searchQuery, page);
     }
+    console.log('UPDATE:', searchQuery);
+    console.log('UPDATE:', page);
   }
 
   onSearchQuery = searchQuery => {
     this.setState({
       searchQuery: searchQuery,
+      gallery: [],
+      page: 1,
     });
   };
 
