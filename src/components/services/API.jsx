@@ -10,5 +10,5 @@ export const getGallary = async (searchQuery, page) => {
   const response = await axios.get(
     `?key=${API_key}&q=${searchQuery}&${type}&${orientation}&page=${page}&per_page=12`
   );
-  return response.data.hits;
+  return response.data;
 };

@@ -5,7 +5,7 @@ import ImageGallery from './ImageGallery';
 import Button from './Button';
 import Modal from './Modal';
 import { Wraper } from './App.styled';
-import Loader from 'react-js-loader';
+import Notiflix from 'notiflix';
 
 export class App extends Component {
   state = {
@@ -16,6 +16,7 @@ export class App extends Component {
     error: null,
     modal: null,
     modalImage: '',
+    isButton: false,
   };
 
   componentDidUpdate(_, prevState) {
@@ -23,8 +24,6 @@ export class App extends Component {
     if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
       this.receiveGalary(searchQuery, page);
     }
-    console.log('UPDATE:', searchQuery);
-    console.log('UPDATE:', page);
   }
 
   onSearchQuery = searchQuery => {
@@ -39,8 +38,27 @@ export class App extends Component {
     try {
       this.setState({ isLoading: true });
       const images = await getGallary(searchQuery, page);
+
+      if (images.totalHits === 0) {
+        Notiflix.Report.info(
+          'Opppsss....',
+          `Sorry '${searchQuery}' no results found... Try again with a new query.`,
+          'Try again?'
+        );
+      }
+
+      if (images.totalHits > page * 12) {
+        this.setState({
+          isButton: true,
+        });
+      }
+      if (images.totalHits < page * 12) {
+        this.setState({
+          isButton: false,
+        });
+      }
       this.setState(state => ({
-        gallery: [...state.gallery, ...images],
+        gallery: [...state.gallery, ...images.hits],
         isLoading: false,
       }));
     } catch (error) {
@@ -59,7 +77,6 @@ export class App extends Component {
   };
 
   onCurrentImage = data => {
-    // console.log(data);
     this.setState({
       modal: true,
       modalImage: data,
@@ -73,22 +90,24 @@ export class App extends Component {
   };
 
   render() {
-    const { gallery, isLoading, modal, modalImage, error } = this.state;
+    const { gallery, isLoading, modal, modalImage, isButton, error } =
+      this.state;
 
     return (
       <Wraper>
         <Searchbar onSubmit={this.onSearchQuery} />
-        {error && <p>Oppp smth going wrong..., pls reload page.</p>}
+        {error &&
+          Notiflix.Report.failure(
+            `${error}`,
+            'Oppp smth going wrong..., pls reload page.',
+            'Reload page'
+          )}
         <ImageGallery gallery={gallery} onClick={this.onCurrentImage} />
-        {isLoading && (
-          <Loader
-            type="rectangular-ping"
-            bgColor={'#3f51b5'}
-            title={'box-rotate-x'}
-            size={200}
-          />
-        )}
-        {gallery.length > 1 && (
+
+        {isLoading && Notiflix.Loading.dots('Loading...')}
+        {!isLoading && Notiflix.Loading.remove()}
+
+        {isButton && (
           <Button onClick={this.handleClick} isSubmitting={isLoading} />
         )}
         {modal && (

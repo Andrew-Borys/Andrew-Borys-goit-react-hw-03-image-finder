@@ -1,4 +1,4 @@
-import { Component } from 'react/cjs/react.production.min';
+import { Component } from 'react';
 import { Header, Form, Button, Input } from './Searchbar.styled';
 import { ImSearch } from 'react-icons/im';
 
@@ -9,7 +9,8 @@ class Searchbar extends Component {
 
   handleSubmitForm = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state.searchQuery);
+
+    this.props.onSubmit(this.state.searchQuery.toLowerCase().trim());
   };
 
   handleInputEntry = e => {

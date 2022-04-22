@@ -1,7 +1,6 @@
 import ImageGalleryItem from './ImageGalleryItem';
 import PropTypes from 'prop-types';
 import { Gallery } from './ImageGallery.styled';
-// import Button from '../Button';
 
 const ImageGallery = ({ gallery, onClick }) => {
   return (
